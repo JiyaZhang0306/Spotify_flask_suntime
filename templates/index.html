@@ -1,17 +1,138 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Weather!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Suntime Playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        header {
+            text-align: center;
+            background: #ffffff;
+            color: #000000;
+            padding: 20px 0;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section input, .form-section button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .flex-item {
+            width: 48%;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        iframe {
+            width: 48%;
+            height: 352px;
+            border: none;
+            border-radius: 12px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: #000000;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-<h1>My Spotify Interface!</h1>
-	<form method="POST">
-		<label>City:</label>
-		<input name=req_city type="text" value={{year}}><br><br>
-		<input type="submit" value="Submit!"><br><br>
-	</form>
-	<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{{playlist_id}}?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <header>
+        <h1>Suntime Playlist for {{ city }}</h1>
+    </header>
+
+    <main>
+        <!-- Form for entering a city -->
+        <div class="form-section">
+            <form method="POST">
+                <label for="req_city">Enter City:</label>
+                <input name="req_city" type="text" placeholder="City Name" required>
+                <button type="submit">Generate Playlists</button>
+            </form>
+        </div>
+
+        <!-- Sunrise & Sunset Times -->
+        <div class="flex-container">
+            <div class="flex-item">
+                <h2>Current City's Sunrise & Sunset</h2>
+                <p><strong>City:</strong> {{ ip_city }}</p>
+                <p><strong>Sunrise:</strong> {{ ip_sunrise }}</p>
+                <p><strong>Sunset:</strong> {{ ip_sunset }}</p>
+            </div>
+            <div class="flex-item">
+                <h2>Hometown City's Sunrise & Sunset</h2>
+                <form method="POST">
+                    <input type="text" id="city" name="city" placeholder="Enter city name" required>
+                    <button type="submit">Get Times</button>
+                </form>
+                {% if city %}
+                    <h3>Results for: {{ city }}</h3>
+                    <p><strong>Sunrise:</strong> {{ city_sunrise }}</p>
+                    <p><strong>Sunset:</strong> {{ city_sunset }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Playlists -->
+        <div class="flex-container">
+            {% if sunrise_playlist_id %}
+                <iframe 
+                    src="https://open.spotify.com/embed/playlist/{{ sunrise_playlist_id }}?utm_source=generator" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                </iframe>
+            {% endif %}
+
+            {% if sunset_playlist_id %}
+                <iframe 
+                    src="https://open.spotify.com/embed/playlist/{{ sunset_playlist_id }}?utm_source=generator" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                </iframe>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Suntime Playlist</p>
+    </footer>
 </body>
 </html>

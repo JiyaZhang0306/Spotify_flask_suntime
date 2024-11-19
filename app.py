@@ -5,7 +5,7 @@ import time
 import requests
 
 from flask import Flask, render_template, request
-from weather_spotify import get_sunrise_playlist, get_sunset_playlist
+from suntime_spotify import get_sunrise_playlist, get_sunset_playlist
 
 # Load Spotify API keys
 with open('spotify_keys.json', 'r') as spotify_file:

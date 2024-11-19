@@ -32,7 +32,7 @@ This project is based on the [Jiya_Spotify_API](https://github.com/JiyaZhang0306
 
   
 
-##  Installation & Setup
+## Installation & Setup
 
 ### Environments
 

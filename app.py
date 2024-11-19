@@ -18,18 +18,17 @@ username = tokens['username']
 scope = 'user-read-private user-read-playback-state user-modify-playback-state playlist-modify-public user-top-read user-library-read user-read-recently-played'
 
 def get_refresh_token():
-    try:
-        token_info = util.prompt_for_user_token(
-            username=username,
-            scope=scope,
-            client_id=client_id,
-            client_secret=client_secret,
-            redirect_uri=redirect_uri,
-        )
-        print(f"Access Token: {token_info}")
-        print("Save the refresh token for future use.")
-    except Exception as e:
-        print(f"Error obtaining token: {e}")
+
+    token_info = util.prompt_for_user_token(
+        username=username,
+        scope=scope,
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+    )
+    print(f"Access Token: {token_info}")
+    print("Save the refresh token for future use.")
+
 
 if __name__ == "__main__":
     authenticate_spotify()  # Authenticate initially to get tokens
@@ -47,14 +46,10 @@ def index():
 
     if request.method == 'POST':
         city = request.form['req_city']
-        try:
-            # Generate both playlists based on user input
-            sunrise_playlist_id = get_sunrise_playlist(city)
-            sunset_playlist_id = get_sunset_playlist(city)
-        except Exception as e:
-            print(f"Error generating playlists: {e}")
-            sunrise_playlist_id = None
-            sunset_playlist_id = None
+
+        # Generate both playlists based on user input
+        sunrise_playlist_id = get_sunrise_playlist(city)
+        sunset_playlist_id = get_sunset_playlist(city)
 
     return render_template(
         'index.html',
